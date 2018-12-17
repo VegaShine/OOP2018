@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import oop2018.secondaprova.gruppo22.ExceptionPack.DataNonPresenteException;
 
 /**
@@ -33,9 +34,10 @@ public DeadLineChecker(GestionePromemoria list)
             for(LocalDateTime l: list.keySet())
             {
                if(now().isEqual(l) | now().isAfter(l))
-               {
+               { String tmp;
                    try{
-                       list.rimuoviPromemoria(l);
+                       tmp=list.rimuoviPromemoria(l);
+                       JOptionPane.showMessageDialog(null, tmp, "Data superata per il corrente promemoria", JOptionPane.INFORMATION_MESSAGE);
                    }catch(DataNonPresenteException ex)
                    {
                        System.err.println("Elemento non pervenuto durante la fase di aggiornamento");
