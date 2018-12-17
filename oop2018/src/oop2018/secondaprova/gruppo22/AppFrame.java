@@ -5,6 +5,13 @@
  */
 package oop2018.secondaprova.gruppo22;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -97,8 +104,18 @@ public class AppFrame extends javax.swing.JFrame {
         });
 
         BackupButton.setText("BackUp promemoria");
+        BackupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackupButtonActionPerformed(evt);
+            }
+        });
 
         CaricaButton.setText("Carica promemoria da file");
+        CaricaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CaricaButtonActionPerformed(evt);
+            }
+        });
 
         VisualizzaTextArea.setEditable(false);
         VisualizzaTextArea.setColumns(20);
@@ -241,6 +258,40 @@ public class AppFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_RemoveButtonActionPerformed
+
+    private void CaricaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CaricaButtonActionPerformed
+
+    
+        try(ObjectInputStream o = new ObjectInputStream(new BufferedInputStream(new FileInputStream("BackupPromemoria.txt"))))
+        {
+             g=(GestionePromemoria)o.readObject();
+        }
+        catch(IOException ex){
+           JOptionPane.showMessageDialog(this,
+                    "File non trovato",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        catch (ClassNotFoundException ex) {
+            
+           JOptionPane.showMessageDialog(this,
+                    "File non trovato",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_CaricaButtonActionPerformed
+
+    private void BackupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackupButtonActionPerformed
+        try(ObjectOutputStream o = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("BackupPromemoria.txt")))){
+          o.writeObject(g);   
+        }catch(IOException e){
+        JOptionPane.showMessageDialog(this,
+                    "Errore nella creazione del file",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+            
+     }
+    }//GEN-LAST:event_BackupButtonActionPerformed
 
     /**
      * @param args the command line arguments

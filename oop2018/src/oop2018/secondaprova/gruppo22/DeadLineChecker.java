@@ -27,11 +27,12 @@ public DeadLineChecker(GestionePromemoria list)
     //va mostrato quindi l'elemento eliminato e aggiornata la jtextarea quindi penso di doverlo mettere nell'interfaccia grafica
     @Override
     public void run(){
+    synchronized (list){
      while(true)
      {
        try{
          Thread.sleep(15000);
-         synchronized (list){
+         
              if(list.size()!= 0)
              {
                for(LocalDateTime l: list.keySet())
@@ -48,14 +49,13 @@ public DeadLineChecker(GestionePromemoria list)
                     }
                    }   
                  }
-             }
-         }     
+             }   
         }catch (InterruptedException ex) {
          Logger.getLogger(DeadLineChecker.class.getName()).log(Level.SEVERE, null, ex);    
         }
      }     
     }
-        
+}        
         
 }
     
