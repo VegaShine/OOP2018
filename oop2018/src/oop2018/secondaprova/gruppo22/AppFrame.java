@@ -7,6 +7,7 @@ package oop2018.secondaprova.gruppo22;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
@@ -164,18 +165,7 @@ public class AppFrame extends javax.swing.JFrame {
             LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
             g.aggiungiPromemoria(dateTime, TestoTextField.getText());
-        } catch (DataPresenteException ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Impossibile aggiungere promemoria",
-                    "Errore apertura file",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (InvalidDataException ex) {
-
-            JOptionPane.showMessageDialog(this,
-                    "Impossibile aggiungere promemoria",
-                    "Errore apertura file",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (InvalidTextException ex) {
+        }catch (DateTimeParseException | DataPresenteException | InvalidDataException | InvalidTextException ex) {
             JOptionPane.showMessageDialog(this,
                     "Impossibile aggiungere promemoria",
                     "Errore apertura file",
