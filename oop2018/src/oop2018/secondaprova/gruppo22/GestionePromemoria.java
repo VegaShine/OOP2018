@@ -8,6 +8,8 @@ package oop2018.secondaprova.gruppo22;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import oop2018.secondaprova.gruppo22.ExceptionPack.*;
 /**
@@ -53,7 +55,7 @@ public class GestionePromemoria extends TreeMap<LocalDateTime,String> implements
         this.notifyAll();
     }
 
-    public void rimuoviPromemoria(LocalDateTime date) throws DataNonPresenteException
+    public String rimuoviPromemoria(LocalDateTime date) throws DataNonPresenteException
     {
         //questo blocco if è eliminabile se si effettua  il controllo direttamente nel'app grafica
         if(!this.containsKey(date))
@@ -62,8 +64,9 @@ public class GestionePromemoria extends TreeMap<LocalDateTime,String> implements
             throw new DataNonPresenteException();
         }
         
-        this.remove(date);
+        String tmp= this.remove(date);
         this.notifyAll();
+        return tmp;
     }
 
     
