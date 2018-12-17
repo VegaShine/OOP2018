@@ -90,8 +90,11 @@
     </Component>
     <Component class="javax.swing.JTextField" name="DataTextField">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Data prom.  gg/mm/aaaa Hh:Mm"/>
+        <Property name="text" type="java.lang.String" value="Data prom. &quot;aaa-mm-gg HH:mm&quot;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DataTextFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="InsertButton">
       <Properties>

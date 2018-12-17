@@ -6,6 +6,7 @@
 package oop2018.secondaprova.gruppo22;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
 import java.util.Map;
@@ -29,12 +30,12 @@ public class GestionePromemoria extends TreeMap<LocalDateTime,String> implements
         {
             tmp+=l.toString()+ "-" + this.get(l)+"\n";
         }
-        return tmp;        
+        return ""+tmp;        
     }
     
     public void aggiungiPromemoria(LocalDateTime date, String promemoria) throws DataPresenteException,InvalidDataException,InvalidTextException
     {
-        if(now().isAfter(date))
+        if(LocalDateTime.now().isAfter(date))
         {
             this.notifyAll();
             throw new InvalidDataException();

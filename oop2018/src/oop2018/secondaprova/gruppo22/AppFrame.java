@@ -21,7 +21,7 @@ import oop2018.secondaprova.gruppo22.ExceptionPack.InvalidTextException;
  * @author Francesco
  */
 public class AppFrame extends javax.swing.JFrame {
-         GestionePromemoria g;
+         GestionePromemoria g = new GestionePromemoria();
 
 
     /**
@@ -55,7 +55,12 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel1.setText("           Promemoriami");
 
-        DataTextField.setText("Data prom.  gg/mm/aaaa Hh:Mm");
+        DataTextField.setText("Data prom. \"aaa-mm-gg HH:mm\"");
+        DataTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DataTextFieldActionPerformed(evt);
+            }
+        });
 
         InsertButton.setText(" inserisci promemoria in lista");
         InsertButton.addActionListener(new java.awt.event.ActionListener() {
@@ -157,21 +162,43 @@ public class AppFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_DataRemoveTextFieldActionPerformed
 
     private void InsertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertButtonActionPerformed
- 
         try {
-
             String str = DataTextField.getText();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
-
+            str=TestoTextField.getText();
+            if(str==null)
+            synchronized(g){
             g.aggiungiPromemoria(dateTime, TestoTextField.getText());
-        }catch (DateTimeParseException | DataPresenteException | InvalidDataException | InvalidTextException ex) {
+                System.out.println(g.toString());
+            }
+             System.out.println(g.toString());
+        } catch (InvalidDataException ex) {
             JOptionPane.showMessageDialog(this,
-                    "Impossibile aggiungere promemoria",
-                    "Errore apertura file",
+                    "Impossibile aggiungere promemoria:\n"+ "data non valida",
+                    "Errore",
                     JOptionPane.ERROR_MESSAGE);
-        }   
+        } catch (DataPresenteException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Impossibile aggiungere promemoria:\n"+ "data già presente",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+        }  catch (InvalidTextException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Impossibile aggiungere promemoria:\n"+"testo non valido",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Impossibile aggiungere promemoria:\n"+ "formato data non valido",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_InsertButtonActionPerformed
+
+    private void DataTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DataTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
