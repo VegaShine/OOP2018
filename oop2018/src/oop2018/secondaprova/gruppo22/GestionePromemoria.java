@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -25,33 +26,30 @@ public class GestionePromemoria extends TreeMap<LocalDateTime,String> implements
     
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        
         String tmp="Promemoria inseriti"+"\n";
         for(LocalDateTime l: this.keySet())
         {
-            tmp+=l.toString()+ "-" + this.get(l)+"\n";
+            
+            tmp+=l.format(formatter)+ " - " + this.get(l)+"\n";
         }
-        return ""+tmp;        
+        return tmp;        
     }
     
-    public void aggiungiPromemoria(LocalDateTime date, String promemoria) throws DataPresenteException,InvalidDataException,InvalidTextException
-    {
-        if(LocalDateTime.now().isAfter(date))
-        {
+    public void aggiungiPromemoria(LocalDateTime date, String promemoria) throws DataPresenteException, InvalidDataException, InvalidTextException {
+        if (LocalDateTime.now().isAfter(date)) {
             this.notifyAll();
             throw new InvalidDataException();
-        }
-        if(promemoria==null | promemoria=="" )
-        {
+        } else if (promemoria == null) {
             this.notifyAll();
             throw new InvalidTextException();
-        }
-        if(this.containsKey(date))
-        {
-            
+        } else if (this.containsKey(date)) {
+
             this.notifyAll();
             throw new DataPresenteException();
         }
-       
+
         this.put(date, promemoria);
         this.notifyAll();
     }

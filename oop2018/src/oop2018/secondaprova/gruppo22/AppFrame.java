@@ -55,7 +55,7 @@ public class AppFrame extends javax.swing.JFrame {
 
         jLabel1.setText("           Promemoriami");
 
-        DataTextField.setText("Data prom. \"aaa-mm-gg HH:mm\"");
+        DataTextField.setText("Data prom. \"aaaa-mm-gg HH:mm\"");
         DataTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DataTextFieldActionPerformed(evt);
@@ -166,13 +166,15 @@ public class AppFrame extends javax.swing.JFrame {
             String str = DataTextField.getText();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
-            str=TestoTextField.getText();
-            if(str==null)
+            
+            if(TestoTextField.getText().isEmpty()){
+                str=null;
+            }else str=TestoTextField.getText();
             synchronized(g){
-            g.aggiungiPromemoria(dateTime, TestoTextField.getText());
+            g.aggiungiPromemoria(dateTime, str);
+            VisualizzaTextArea.setText(g.toString());
                 System.out.println(g.toString());
             }
-             System.out.println(g.toString());
         } catch (InvalidDataException ex) {
             JOptionPane.showMessageDialog(this,
                     "Impossibile aggiungere promemoria:\n"+ "data non valida",
