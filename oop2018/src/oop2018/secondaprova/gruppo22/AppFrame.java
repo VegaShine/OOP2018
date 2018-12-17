@@ -8,6 +8,8 @@ package oop2018.secondaprova.gruppo22;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
@@ -220,11 +222,11 @@ public class AppFrame extends javax.swing.JFrame {
                 synchronized(g){
                 String tmp=g.get(dateTime);
                 
-                 int value=JOptionPane.showConfirmDialog(this,dateTime.toString()+" - "+tmp,"Eliminare l'elemento?",YES_NO_OPTION,QUESTION_MESSAGE);/*MessageDialog(this,
-                    dateTime.toString()+ " - "+tmp,
-                    "Elemento rimosso correttamente",
-                    JOptionPane.YES_NO_OPTION);*/
+                int value=JOptionPane.showConfirmDialog(this,dateTime.toString()+" - "+tmp,"Eliminare l'elemento?",YES_NO_OPTION,QUESTION_MESSAGE);
+                
+                if (value==0)
                 g.rimuoviPromemoria(dateTime);
+                
                 VisualizzaTextArea.setText(g.toString());
                 }
         } catch (DataNonPresenteException ex) {
@@ -271,11 +273,26 @@ public class AppFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AppFrame().setVisible(true);
-                new Thread(new DeadLineChecker(g)).start();
+                new Thread(new DeadLineChecker(g)).start();  
+                new Thread(new AppFrame.TextUpdater()).start();
             }
         });
     }
-
+  static class  TextUpdater implements Runnable{
+        @Override
+        public void run(){
+         synchronized(g){
+             while(true){
+                 try{
+                     g.wait();
+                     VisualizzaTextArea.setText(g.toString());
+                 }catch(InterruptedException ex){
+                       Logger.getLogger(TextUpdater.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+             }
+         }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackupButton;
     private javax.swing.JButton CaricaButton;
@@ -285,7 +302,7 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JButton RemoveButton;
     private javax.swing.JTextField TestoTextField;
     private javax.swing.JScrollPane VisualizzaScrollPane;
-    private javax.swing.JTextArea VisualizzaTextArea;
+    private static javax.swing.JTextArea VisualizzaTextArea;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

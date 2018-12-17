@@ -19,6 +19,7 @@ import oop2018.secondaprova.gruppo22.ExceptionPack.DataNonPresenteException;
 public class DeadLineChecker implements Runnable {
 
 private GestionePromemoria list;
+
 public DeadLineChecker(GestionePromemoria list)
 {
     this.list=list;

@@ -153,6 +153,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="VisualizzaScrollPane.setViewportView(VisualizzaTextArea);&#xa;VisualizzaScrollPane.setName(&quot;Promemoria inseriti&quot;);&#xa;VisualizzaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);&#xa;VisualizzaScrollPane.setBorder(new TitledBorder(new EtchedBorder(),&quot;Promemoria inseriti&quot;));&#xa;VisualizzaScrollPane.setVisible(true);"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
           </AuxValues>
         </Component>
       </SubComponents>

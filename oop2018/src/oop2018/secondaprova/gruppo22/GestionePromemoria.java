@@ -56,7 +56,6 @@ public class GestionePromemoria extends TreeMap<LocalDateTime,String> implements
 
     public String rimuoviPromemoria(LocalDateTime date) throws DataNonPresenteException
     {
-        //questo blocco if è eliminabile se si effettua  il controllo direttamente nel'app grafica
         if(!this.containsKey(date))
         {
             this.notifyAll();
