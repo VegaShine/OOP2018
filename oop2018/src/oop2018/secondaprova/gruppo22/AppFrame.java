@@ -271,7 +271,7 @@ public class AppFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AppFrame().setVisible(true);
-                 new Thread(new DeadLineChecker(g)).start();
+                new Thread(new DeadLineChecker(g)).start();
             }
         });
     }

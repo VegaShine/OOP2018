@@ -46,7 +46,7 @@ public DeadLineChecker(GestionePromemoria list)
                         System.err.println("Elemento non pervenuto durante la fase di aggiornamento");
                     }
                    }   
-                }
+                 }
              }
          }     
         }catch (InterruptedException ex) {
