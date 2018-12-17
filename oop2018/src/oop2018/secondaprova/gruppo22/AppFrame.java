@@ -5,16 +5,23 @@
  */
 package oop2018.secondaprova.gruppo22;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import oop2018.secondaprova.gruppo22.ExceptionPack.DataPresenteException;
+import oop2018.secondaprova.gruppo22.ExceptionPack.InvalidDataException;
+import oop2018.secondaprova.gruppo22.ExceptionPack.InvalidTextException;
 
 /**
  *
  * @author Francesco
  */
 public class AppFrame extends javax.swing.JFrame {
-    
+         GestionePromemoria g;
+
 
     /**
      * Creates new form AppFrame
@@ -33,52 +40,57 @@ public class AppFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        DataTextField = new javax.swing.JTextField();
+        InsertButton = new javax.swing.JButton();
+        TestoTextField = new javax.swing.JTextField();
+        RemoveButton = new javax.swing.JButton();
+        DataRemoveTextField = new javax.swing.JTextField();
+        BackupButton = new javax.swing.JButton();
+        CaricaButton = new javax.swing.JButton();
+        VisualizzaScrollPane = new javax.swing.JScrollPane();
+        VisualizzaTextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("           Promemoriami");
 
-        jTextField1.setText("Data prom.  gg/mm/aaaa Hh:Mm");
+        DataTextField.setText("Data prom.  gg/mm/aaaa Hh:Mm");
 
-        jButton1.setText(" inserisci promemoria in lista");
-
-        jTextField2.setText("     Inserire promemoria");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        InsertButton.setText(" inserisci promemoria in lista");
+        InsertButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                InsertButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Rimuovi promemoria");
-
-        jTextField3.setText("Data promemoria da rimuovere");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        TestoTextField.setText("     Inserire promemoria");
+        TestoTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                TestoTextFieldActionPerformed(evt);
             }
         });
 
-        jButton3.setText("BackUp promemoria");
+        RemoveButton.setText("Rimuovi promemoria");
 
-        jButton4.setText("Carica promemoria da file");
+        DataRemoveTextField.setText("Data promemoria da rimuovere");
+        DataRemoveTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DataRemoveTextFieldActionPerformed(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-        jScrollPane1.setViewportView(jTextArea1);
-        jScrollPane1.setName("Promemoria inseriti");
-        jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane1.setBorder(new TitledBorder(new EtchedBorder(),"Promemoria inseriti"));
-        jScrollPane1.setVisible(true);
+        BackupButton.setText("BackUp promemoria");
+
+        CaricaButton.setText("Carica promemoria da file");
+
+        VisualizzaTextArea.setColumns(20);
+        VisualizzaTextArea.setRows(5);
+        VisualizzaScrollPane.setViewportView(VisualizzaTextArea);
+        VisualizzaScrollPane.setViewportView(VisualizzaTextArea);
+        VisualizzaScrollPane.setName("Promemoria inseriti");
+        VisualizzaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        VisualizzaScrollPane.setBorder(new TitledBorder(new EtchedBorder(),"Promemoria inseriti"));
+        VisualizzaScrollPane.setVisible(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,18 +99,18 @@ public class AppFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField3)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(TestoTextField)
+                    .addComponent(DataTextField)
+                    .addComponent(DataRemoveTextField)
+                    .addComponent(BackupButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(RemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(InsertButton))
                         .addGap(0, 18, Short.MAX_VALUE))
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(CaricaButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(VisualizzaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
             .addGroup(layout.createSequentialGroup()
                 .addGap(186, 186, 186)
@@ -113,35 +125,63 @@ public class AppFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(InsertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DataTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TestoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(RemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DataRemoveTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BackupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CaricaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(VisualizzaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void TestoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestoTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_TestoTextFieldActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void DataRemoveTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataRemoveTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_DataRemoveTextFieldActionPerformed
+
+    private void InsertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertButtonActionPerformed
+ 
+        try {
+
+            String str = DataTextField.getText();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+
+            g.aggiungiPromemoria(dateTime, TestoTextField.getText());
+        } catch (DataPresenteException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Impossibile aggiungere promemoria",
+                    "Errore apertura file",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (InvalidDataException ex) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Impossibile aggiungere promemoria",
+                    "Errore apertura file",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (InvalidTextException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Impossibile aggiungere promemoria",
+                    "Errore apertura file",
+                    JOptionPane.ERROR_MESSAGE);
+        }   
+    }//GEN-LAST:event_InsertButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,15 +223,15 @@ public class AppFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton BackupButton;
+    private javax.swing.JButton CaricaButton;
+    private javax.swing.JTextField DataRemoveTextField;
+    private javax.swing.JTextField DataTextField;
+    private javax.swing.JButton InsertButton;
+    private javax.swing.JButton RemoveButton;
+    private javax.swing.JTextField TestoTextField;
+    private javax.swing.JScrollPane VisualizzaScrollPane;
+    private javax.swing.JTextArea VisualizzaTextArea;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
