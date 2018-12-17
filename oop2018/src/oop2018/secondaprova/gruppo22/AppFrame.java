@@ -173,6 +173,7 @@ public class AppFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                //ciao
                 new AppFrame().setVisible(true);
                 GestionePromemoria list= new GestionePromemoria();
                 DeadLineChecker dead= new DeadLineChecker(list);
