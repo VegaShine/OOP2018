@@ -5,18 +5,9 @@
  */
 package oop2018.secondaprova.gruppo22;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
@@ -90,18 +81,8 @@ public class AppFrame extends javax.swing.JFrame {
         });
 
         BackupButton.setText("BackUp promemoria");
-        BackupButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackupButtonActionPerformed(evt);
-            }
-        });
 
         CaricaButton.setText("Carica promemoria da file");
-        CaricaButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CaricaButtonActionPerformed(evt);
-            }
-        });
 
         VisualizzaTextArea.setColumns(20);
         VisualizzaTextArea.setRows(5);
@@ -180,48 +161,17 @@ public class AppFrame extends javax.swing.JFrame {
         try {
 
             String str = DataTextField.getText();
-           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
             g.aggiungiPromemoria(dateTime, TestoTextField.getText());
         }catch (DateTimeParseException | DataPresenteException | InvalidDataException | InvalidTextException ex) {
             JOptionPane.showMessageDialog(this,
                     "Impossibile aggiungere promemoria",
-                    "Errore",
+                    "Errore apertura file",
                     JOptionPane.ERROR_MESSAGE);
         }   
     }//GEN-LAST:event_InsertButtonActionPerformed
-
-    private void BackupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackupButtonActionPerformed
-         try(ObjectOutputStream o = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("BackupPromemoria.txt")))){
-          o.writeObject(g);   
-        }catch(IOException e){
-            JOptionPane.showMessageDialog(this,
-                    "Backup non effettuato",
-                    "Errore",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_BackupButtonActionPerformed
-
-    private void CaricaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CaricaButtonActionPerformed
-
-        try(ObjectInputStream o = new ObjectInputStream(new BufferedInputStream(new FileInputStream("BackupPromemoria"))))
-        {
-             g=(GestionePromemoria)o.readObject();
-        }
-        catch(IOException ex){
-            JOptionPane.showMessageDialog(this,
-                    "Impossibile aprire il file",
-                    "Errore aertura file",
-                    JOptionPane.ERROR_MESSAGE);  
-        }
-        catch (ClassNotFoundException ex) {        
-            JOptionPane.showMessageDialog(this,
-                    "Impossibile aprire il file",
-                    "Errore aertura file",
-                    JOptionPane.ERROR_MESSAGE);  
-        }
-    }//GEN-LAST:event_CaricaButtonActionPerformed
 
     /**
      * @param args the command line arguments
