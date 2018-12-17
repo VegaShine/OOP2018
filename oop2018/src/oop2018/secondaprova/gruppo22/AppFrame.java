@@ -9,9 +9,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import oop2018.secondaprova.gruppo22.ExceptionPack.DataNonPresenteException;
 import oop2018.secondaprova.gruppo22.ExceptionPack.DataPresenteException;
 import oop2018.secondaprova.gruppo22.ExceptionPack.InvalidDataException;
 import oop2018.secondaprova.gruppo22.ExceptionPack.InvalidTextException;
@@ -21,8 +24,9 @@ import oop2018.secondaprova.gruppo22.ExceptionPack.InvalidTextException;
  * @author Francesco
  */
 public class AppFrame extends javax.swing.JFrame {
-         GestionePromemoria g = new GestionePromemoria();
-
+        private static GestionePromemoria g=new GestionePromemoria();
+        
+        
 
     /**
      * Creates new form AppFrame
@@ -77,6 +81,11 @@ public class AppFrame extends javax.swing.JFrame {
         });
 
         RemoveButton.setText("Rimuovi promemoria");
+        RemoveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveButtonActionPerformed(evt);
+            }
+        });
 
         DataRemoveTextField.setText("Data promemoria da rimuovere");
         DataRemoveTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +98,7 @@ public class AppFrame extends javax.swing.JFrame {
 
         CaricaButton.setText("Carica promemoria da file");
 
+        VisualizzaTextArea.setEditable(false);
         VisualizzaTextArea.setColumns(20);
         VisualizzaTextArea.setRows(5);
         VisualizzaScrollPane.setViewportView(VisualizzaTextArea);
@@ -173,7 +183,6 @@ public class AppFrame extends javax.swing.JFrame {
             synchronized(g){
             g.aggiungiPromemoria(dateTime, str);
             VisualizzaTextArea.setText(g.toString());
-                System.out.println(g.toString());
             }
         } catch (InvalidDataException ex) {
             JOptionPane.showMessageDialog(this,
@@ -201,6 +210,35 @@ public class AppFrame extends javax.swing.JFrame {
     private void DataTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DataTextFieldActionPerformed
+
+    private void RemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveButtonActionPerformed
+        try {
+                String str = DataRemoveTextField.getText();
+                System.out.println(str);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+                synchronized(g){
+                String tmp=g.get(dateTime);
+                
+                 int value=JOptionPane.showConfirmDialog(this,dateTime.toString()+" - "+tmp,"Eliminare l'elemento?",YES_NO_OPTION,QUESTION_MESSAGE);/*MessageDialog(this,
+                    dateTime.toString()+ " - "+tmp,
+                    "Elemento rimosso correttamente",
+                    JOptionPane.YES_NO_OPTION);*/
+                g.rimuoviPromemoria(dateTime);
+                VisualizzaTextArea.setText(g.toString());
+                }
+        } catch (DataNonPresenteException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Impossibile rimuovere promemoria:\n"+ "data non presente",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Impossibile trovare promemoria:\n"+ "formato data non valido",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_RemoveButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,9 +271,7 @@ public class AppFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AppFrame().setVisible(true);
-                GestionePromemoria list= new GestionePromemoria();
-                DeadLineChecker dead= new DeadLineChecker(list);
-            
+                 new Thread(new DeadLineChecker(g)).start();
             }
         });
     }

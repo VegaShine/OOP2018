@@ -31,25 +31,27 @@ public DeadLineChecker(GestionePromemoria list)
        try{
          Thread.sleep(15000);
          synchronized (list){
-            for(LocalDateTime l: list.keySet())
-            {
-               if(now().isEqual(l) | now().isAfter(l))
-               { String tmp;
-                   try{
-                       tmp=list.rimuoviPromemoria(l);
-                       JOptionPane.showMessageDialog(null, tmp, "Data superata per il corrente promemoria", JOptionPane.INFORMATION_MESSAGE);
-                   }catch(DataNonPresenteException ex)
-                   {
-                       System.err.println("Elemento non pervenuto durante la fase di aggiornamento");
-                   }
-               }
-                   
-            }
+             if(list.size()!= 0)
+             {
+               for(LocalDateTime l: list.keySet())
+               {
+                   if(now().isEqual(l) | now().isAfter(l))
+                   {    String tmp;
+                    try{
+                        tmp=list.rimuoviPromemoria(l);
+                        JOptionPane.showMessageDialog(null, tmp, "Data superata per il corrente promemoria", JOptionPane.INFORMATION_MESSAGE);
+                        list.notifyAll();
+                    }catch(DataNonPresenteException ex)
+                    {
+                        System.err.println("Elemento non pervenuto durante la fase di aggiornamento");
+                    }
+                   }   
+                }
+             }
          }     
         }catch (InterruptedException ex) {
          Logger.getLogger(DeadLineChecker.class.getName()).log(Level.SEVERE, null, ex);    
         }
-       list.notifyAll();      
      }     
     }
         
