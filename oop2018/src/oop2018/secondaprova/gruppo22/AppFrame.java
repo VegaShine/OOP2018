@@ -265,6 +265,7 @@ public class AppFrame extends javax.swing.JFrame {
         try(ObjectInputStream o = new ObjectInputStream(new BufferedInputStream(new FileInputStream("BackupPromemoria.txt"))))
         {
              g=(GestionePromemoria)o.readObject();
+             VisualizzaTextArea.setText(g.toString());
         }
         catch(IOException ex){
            JOptionPane.showMessageDialog(this,
